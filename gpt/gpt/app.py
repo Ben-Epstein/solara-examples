@@ -6,7 +6,7 @@ from gpt.utils import get_table_rows, query_gpt, save_answer
 
 
 @sl.component
-def qa() -> None:
+def QA() -> None:
     sl.Markdown('<h1 style="text-align: center;">Ask GPT</h1>')
     sl.InputText(
         "Ask your question",
@@ -33,7 +33,7 @@ def qa() -> None:
 
 
 @sl.component
-def history() -> None:
+def History() -> None:
     sl.Markdown('<h1 style="text-align: center;">Saved Q&A</h1><br>')
     sl.Markdown("---")
     html = HTML_TABLE.format(table_rows=get_table_rows())
@@ -43,7 +43,7 @@ def history() -> None:
 
 
 @sl.component
-def sidebar() -> None:
+def Sidebar() -> None:
     sl.InputText("OpenAI API Key", password=True, on_value=State.openai_key.set)
 
 
@@ -52,11 +52,11 @@ def Page() -> None:
     sl.Title("Ask GPT")
     with sl.Column():
         with sl.Card():
-            qa()
+            QA()
         with sl.Card():
-            history()
+            History()
     with sl.Sidebar():
-        sidebar()
+        Sidebar()
 
 
 if __name__ == "__main__":
