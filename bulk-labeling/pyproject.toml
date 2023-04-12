@@ -15,7 +15,7 @@ dependencies = [
   "solara",
   "pandas",
   "numpy",
-  "plotly<=5.9.0",
+  "plotly==5.14.0",
   "sentence-transformers",
   "umap-learn",
   "numerize",

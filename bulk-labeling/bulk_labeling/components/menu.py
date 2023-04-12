@@ -1,4 +1,5 @@
 import itertools
+from collections import defaultdict
 from functools import partial
 from time import sleep
 from typing import Callable, List
@@ -62,20 +63,21 @@ def export_edits_button(df: pd.DataFrame) -> None:
     # TODO: Remove when solara updates
     State.labeled_ids.use()
 
-    def export_edited_df() -> None:
-        """Assigns the label and downloads the df to the user"""
-        # TODO: Last thing! Allow the user to download the df
-        exp_df = apply_df_edits(df)
-        print(f"{len(exp_df)} rows edited")
+    def clear_labels() -> None:
+        State.labeled_ids.set(defaultdict(list))
 
     if State.labeled_ids.value:
         # Flatten all of the edits into a single set, so we know how many were edited
         num_edited = len(set(itertools.chain(*State.labeled_ids.value.values())))
-        sl.Button(
-            f"Export {num_edited} labeled points",
-            on_click=export_edited_df,
-            **BUTTON_KWARGS,
-        )
+        exp_df = apply_df_edits(df)
+        data = exp_df.to_csv(index=False)
+        with sl.Row():
+            sl.FileDownload(
+                data,
+                label=f"Export {num_edited} labeled points",
+                filename="export.csv",
+            )
+            sl.Button("Clear labels?", on_click=clear_labels)
 
 
 @sl.component

@@ -37,7 +37,6 @@ def load_df(data: Union[str, BytesIO]) -> pd.DataFrame:
 
 
 def apply_df_edits(df: pd.DataFrame) -> pd.DataFrame:
-    print("Should be downloading!")
     df2 = df.copy()
     labeled_ids = State.labeled_ids.value
     # Map every ID to it's assigned labels
