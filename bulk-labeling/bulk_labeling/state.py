@@ -1,6 +1,7 @@
 from collections import defaultdict
 from typing import Dict, List, Optional, Set
 
+import pandas as pd
 from solara.lab import Reactive
 
 DEFAULT_POINT_SIZE = 2
@@ -14,6 +15,7 @@ class State:
     assigned_new_label = Reactive[bool](False)
     filter_text = Reactive[str]("")
     reset_on_assignment = Reactive[bool](True)
+    df = Reactive[pd.DataFrame](pd.DataFrame({}))
 
 
 class PlotState:

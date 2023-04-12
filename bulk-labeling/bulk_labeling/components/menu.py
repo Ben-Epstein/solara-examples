@@ -1,15 +1,13 @@
 import itertools
 from collections import defaultdict
-from functools import partial
 from time import sleep
-from typing import Callable, List
+from typing import List
 
-import pandas as pd
 import solara as sl
 
 from bulk_labeling.state import PlotState, State, reset
 from bulk_labeling.utils.common import BUTTON_KWARGS
-from bulk_labeling.utils.df import INTERNAL_COLS, apply_df_edits, filtered_df
+from bulk_labeling.utils.df import INTERNAL_COLS, apply_df_edits
 from bulk_labeling.utils.menu import (
     add_new_label,
     assign_labels,
@@ -33,12 +31,11 @@ def assigned_label_view() -> None:
 
 
 @sl.component
-def assign_label_button(df: pd.DataFrame) -> None:
-    fdf = filtered_df(df)
-    btn_label, button_enabled = get_assign_label_button_text(df)
+def assign_label_button() -> None:
+    btn_label, button_enabled = get_assign_label_button_text(State.df.value)
     sl.Button(
         btn_label,
-        on_click=partial(assign_labels, fdf),
+        on_click=assign_labels,
         disabled=not button_enabled,
         **BUTTON_KWARGS,
     )
@@ -59,7 +56,7 @@ def register_new_label_button() -> None:
 
 
 @sl.component
-def export_edits_button(df: pd.DataFrame) -> None:
+def export_edits_button() -> None:
     # TODO: Remove when solara updates
     State.labeled_ids.use()
 
@@ -69,7 +66,7 @@ def export_edits_button(df: pd.DataFrame) -> None:
     if State.labeled_ids.value:
         # Flatten all of the edits into a single set, so we know how many were edited
         num_edited = len(set(itertools.chain(*State.labeled_ids.value.values())))
-        exp_df = apply_df_edits(df)
+        exp_df = apply_df_edits(State.df.value)
         data = exp_df.to_csv(index=False)
         with sl.Row():
             sl.FileDownload(
@@ -81,27 +78,27 @@ def export_edits_button(df: pd.DataFrame) -> None:
 
 
 @sl.component
-def label_manager(df: pd.DataFrame) -> None:
+def label_manager() -> None:
     register_new_label_button()
-    assign_label_button(df)
-    export_edits_button(df)
+    assign_label_button()
+    export_edits_button()
 
 
 @sl.component
-def file_manager(set_df: Callable) -> None:
+def file_manager() -> None:
     PlotState.color.use()
     PlotState.loading.use()
 
     sl.FileDrop(
         label="Drop CSV here (`text` col required)!",
-        on_file=partial(load_file_df, set_df=set_df),
+        on_file=load_file_df,
         lazy=False,
     )
     # We use sl.Column to force these two buttons to be stacked instead of side-by-side
     with sl.Column():
         sl.Button(
             label="Load demo dataset",
-            on_click=partial(load_demo_df, set_df),
+            on_click=load_demo_df,
             **BUTTON_KWARGS,
         )
         sl.Button(label="Reset view", on_click=reset, **BUTTON_KWARGS)
@@ -130,16 +127,15 @@ def view_controller(avl_cols: List[str]) -> None:
 
 
 @sl.component
-def menu(df: pd.DataFrame, set_df: Callable) -> None:
+def menu() -> None:
     State.reset_on_assignment.use()
 
     # avl_cols is dependent on df, so any time it changes,
     # this will automatically update
-    set_cols = lambda: [i for i in df.columns if i not in NO_COLOR_COLS]  # noqa: E731
-    avl_cols = sl.use_memo(set_cols, [df])
+    avl_cols = [i for i in State.df.value.columns if i not in NO_COLOR_COLS]
 
-    file_manager(set_df)
-    label_manager(df)
+    file_manager()
+    label_manager()
     view_controller(avl_cols)
     sl.Markdown("**Reset filters on label assignment?**")
     if State.reset_on_assignment.value:

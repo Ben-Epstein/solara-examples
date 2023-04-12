@@ -15,9 +15,9 @@ def _emb_loading_state() -> None:
 
 
 @sl.component
-def no_embs(df: pd.DataFrame) -> None:
+def no_embs() -> None:
     with sl.Columns([1, 1]):
-        table(filtered_df(df))
+        table(filtered_df(State.df.value))
         _emb_loading_state()
 
 
@@ -43,17 +43,17 @@ def table(df: pd.DataFrame) -> None:
 
 
 @sl.component
-def df_view(df: pd.DataFrame) -> None:
+def df_view() -> None:
     # TODO: Remove when solara updates
     PlotState.point_size.use()
     PlotState.color.use()
     # We need these because of the `filtered_df` call.
-    # next itertation we will move the df into global state (solara blocking)
+    # next iteration we will move the df into global state (solara blocking)
     # and then filtered_df becomes always up to date
     State.filtered_ids.use()
     State.filter_text.use()
 
-    fdf = filtered_df(df)
+    fdf = filtered_df(State.df.value)
 
     with sl.Columns([1, 1]):
         table(fdf)

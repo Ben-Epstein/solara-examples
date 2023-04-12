@@ -1,6 +1,6 @@
 import io
 import os
-from typing import Callable, Tuple
+from typing import Tuple
 
 import pandas as pd
 from solara.components.file_drop import FileInfo
@@ -23,7 +23,8 @@ def add_new_label(new_label: str) -> None:
     State.chosen_label.set(new_label)
 
 
-def assign_labels(df: pd.DataFrame) -> None:
+def assign_labels() -> None:
+    df = filtered_df(State.df.value)
     labeled_ids = State.labeled_ids.value.copy()
     new_ids = df["id"].tolist()
     if State.chosen_label.value:
@@ -52,19 +53,19 @@ def get_assign_label_button_text(df: pd.DataFrame) -> Tuple[str, bool]:
     return btn_label, button_enabled
 
 
-def load_demo_df(set_df: Callable) -> None:
+def load_demo_df() -> None:
     new_df = load_df(PATH)
-    set_df(new_df)
+    State.df.set(new_df)
 
 
-def load_file_df(file: FileInfo, set_df: Callable) -> None:
+def load_file_df(file: FileInfo) -> None:
     if not file["data"]:
         return
     new_df = load_df(io.BytesIO(file["data"]))
     # Set it before embeddings so the user can see the df while embeddings load
     PlotState.loading.set(True)
-    set_df(new_df)
+    State.df.set(new_df)
     new_df = add_embeddings_to_df(new_df)
     # Set it again after embeddings so we can render the plotly graph
-    set_df(new_df)
+    State.df.set(new_df)
     PlotState.loading.set(False)
