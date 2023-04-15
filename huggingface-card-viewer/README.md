@@ -1,5 +1,11 @@
 # Simple GPT Question/Answer system
 
+
+
+https://user-images.githubusercontent.com/22605641/232244704-9bd41292-4226-440f-a6a3-0f105e57cd36.mov
+
+
+
 ## How to Run
 ```shell
 # Create a virtual environment (recommended) 
