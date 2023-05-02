@@ -1,6 +1,5 @@
 import pandas as pd
 import solara as sl
-from reacton import ipyvuetify as V
 
 from bulk_labeling.state import PlotState, State
 from bulk_labeling.utils.df import INTERNAL_COLS, filtered_df
@@ -11,7 +10,7 @@ from bulk_labeling.utils.plotly import create_plotly_figure, find_row_ids
 def _emb_loading_state() -> None:
     sl.Markdown("## Embeddings")
     sl.Markdown("Loading your embeddings. Enjoy this fun animation for now")
-    V.ProgressLinear(indeterminate=True)
+    solara.ProgressLinear(True, color="purple")
 
 
 @sl.component
