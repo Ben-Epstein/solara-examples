@@ -21,9 +21,6 @@ NO_COLOR_COLS = INTERNAL_COLS + ["text"]
 
 @sl.component
 def assigned_label_view() -> None:
-    State.assigned_new_label.use()
-    State.filtered_ids.use()
-
     if State.assigned_new_label.value:
         sl.Info(f"{len(State.filtered_ids.value)} labeled!")
         sleep(2)
@@ -43,10 +40,6 @@ def assign_label_button() -> None:
 
 @sl.component
 def register_new_label_button() -> None:
-    # TODO: Remove when solara updates
-    State.available_labels.use()
-    State.chosen_label.use()
-
     # TODO: Make a State.available_labels.append
     sl.InputText("Register new label", on_value=add_new_label)
     if State.available_labels.value:
@@ -57,9 +50,6 @@ def register_new_label_button() -> None:
 
 @sl.component
 def export_edits_button() -> None:
-    # TODO: Remove when solara updates
-    State.labeled_ids.use()
-
     def clear_labels() -> None:
         State.labeled_ids.set(defaultdict(list))
 
@@ -86,9 +76,6 @@ def label_manager() -> None:
 
 @sl.component
 def file_manager() -> None:
-    PlotState.color.use()
-    PlotState.loading.use()
-
     sl.FileDrop(
         label="Drop CSV here (`text` col required)!",
         on_file=load_file_df,
@@ -106,11 +93,6 @@ def file_manager() -> None:
 
 @sl.component
 def view_controller(avl_cols: List[str]) -> None:
-    # TODO: Remove when solara updates
-    PlotState.color.use()
-    PlotState.point_size.use()
-    State.filter_text.use()
-
     sl.InputText(
         "Filter by search", State.filter_text.value, on_value=State.filter_text.set
     )
@@ -128,10 +110,6 @@ def view_controller(avl_cols: List[str]) -> None:
 
 @sl.component
 def menu() -> None:
-    State.reset_on_assignment.use()
-
-    # avl_cols is dependent on df, so any time it changes,
-    # this will automatically update
     avl_cols = [i for i in State.df.value.columns if i not in NO_COLOR_COLS]
 
     file_manager()
