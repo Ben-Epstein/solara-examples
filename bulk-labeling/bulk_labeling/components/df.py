@@ -23,8 +23,6 @@ def no_embs() -> None:
 
 @sl.component
 def embeddings(df: pd.DataFrame, color: str, point_size: int) -> None:
-    State.filtered_ids.use()
-
     sl.Markdown("## Embeddings")
     fig = create_plotly_figure(df, color, point_size)
 
@@ -44,15 +42,6 @@ def table(df: pd.DataFrame) -> None:
 
 @sl.component
 def df_view() -> None:
-    # TODO: Remove when solara updates
-    PlotState.point_size.use()
-    PlotState.color.use()
-    # We need these because of the `filtered_df` call.
-    # next iteration we will move the df into global state (solara blocking)
-    # and then filtered_df becomes always up to date
-    State.filtered_ids.use()
-    State.filter_text.use()
-
     fdf = filtered_df(State.df.value)
 
     with sl.Columns([1, 1]):
