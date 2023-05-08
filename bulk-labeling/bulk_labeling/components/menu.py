@@ -20,7 +20,7 @@ NO_COLOR_COLS = INTERNAL_COLS + ["text"]
 
 
 @sl.component
-def assigned_label_view() -> None:
+def AssignedLabelView() -> None:
     if State.assigned_new_label.value:
         sl.Info(f"{len(State.filtered_ids.value)} labeled!")
         sleep(2)
@@ -28,7 +28,7 @@ def assigned_label_view() -> None:
 
 
 @sl.component
-def assign_label_button() -> None:
+def AssignedLabelButton() -> None:
     btn_label, button_enabled = get_assign_label_button_text(State.df.value)
     sl.Button(
         btn_label,
@@ -39,7 +39,7 @@ def assign_label_button() -> None:
 
 
 @sl.component
-def register_new_label_button() -> None:
+def RegisterNewLabelButton() -> None:
     # TODO: Make a State.available_labels.append
     sl.InputText("Register new label", on_value=add_new_label)
     if State.available_labels.value:
@@ -51,7 +51,7 @@ def register_new_label_button() -> None:
 
 
 @sl.component
-def export_edits_button() -> None:
+def ExportEditsButton() -> None:
     def clear_labels() -> None:
         State.labeled_ids.set(defaultdict(list))
 
@@ -70,14 +70,14 @@ def export_edits_button() -> None:
 
 
 @sl.component
-def label_manager() -> None:
-    register_new_label_button()
-    assign_label_button()
-    export_edits_button()
+def LabelManager() -> None:
+    RegisterNewLabelButton()
+    AssignedLabelButton()
+    ExportEditsButton()
 
 
 @sl.component
-def file_manager() -> None:
+def FileManager() -> None:
     sl.FileDrop(
         label="Drop CSV here (`text` col required)!",
         on_file=load_file_df,
@@ -94,7 +94,7 @@ def file_manager() -> None:
 
 
 @sl.component
-def view_controller(avl_cols: List[str]) -> None:
+def ViewController(avl_cols: List[str]) -> None:
     sl.InputText(
         "Filter by search", State.filter_text.value, on_value=State.filter_text.set
     )
@@ -110,12 +110,12 @@ def view_controller(avl_cols: List[str]) -> None:
 
 
 @sl.component
-def menu() -> None:
+def Menu() -> None:
     avl_cols = [i for i in State.df.value.columns if i not in NO_COLOR_COLS]
 
-    file_manager()
-    label_manager()
-    view_controller(avl_cols)
+    FileManager()
+    LabelManager()
+    ViewController(avl_cols)
     sl.Markdown("**Reset filters on label assignment?**")
     if State.reset_on_assignment.value:
         label = "Reset"
