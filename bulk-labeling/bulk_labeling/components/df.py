@@ -10,7 +10,7 @@ from bulk_labeling.utils.plotly import create_plotly_figure, find_row_ids
 def _emb_loading_state() -> None:
     sl.Markdown("## Embeddings")
     sl.Markdown("Loading your embeddings. Enjoy this fun animation for now")
-    solara.ProgressLinear(True, color="purple")
+    sl.ProgressLinear(True, color="purple")
 
 
 @sl.component

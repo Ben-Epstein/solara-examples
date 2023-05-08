@@ -1,34 +1,34 @@
 from collections import defaultdict
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Set
 
 import pandas as pd
-from solara.lab import Reactive
+from solara import Reactive, reactive
 
 DEFAULT_POINT_SIZE = 2
 
 
 class State:
-    available_labels = Reactive[Set[str]](set())
-    labeled_ids = Reactive[Dict[str, List[int]]](defaultdict(list))
-    filtered_ids = Reactive[List[int]]([])
-    chosen_label = Reactive[Optional[str]](None)
-    assigned_new_label = Reactive[bool](False)
-    filter_text = Reactive[str]("")
-    reset_on_assignment = Reactive[bool](True)
-    df = Reactive[pd.DataFrame](pd.DataFrame({}))
+    available_labels: Reactive[Set[str]] = reactive(set())
+    labeled_ids: Reactive[Dict[str, List[int]]] = reactive(defaultdict(list))
+    filtered_ids: Reactive[List[int]] = reactive([])
+    chosen_label = reactive("")
+    assigned_new_label = reactive(False)
+    filter_text = reactive("")
+    reset_on_assignment = reactive(True)
+    df = reactive(pd.DataFrame({}))
 
 
 class PlotState:
-    point_size = Reactive[int](DEFAULT_POINT_SIZE)
-    color = Reactive[str]("")
+    point_size = reactive(DEFAULT_POINT_SIZE)
+    color = reactive("")
     # While we calculate embeddings and UMAP, we can manage the loading state
-    loading = Reactive[bool](False)
+    loading = reactive(False)
 
 
 def reset() -> None:
     """Removes any filters applied to the data"""
     State.filtered_ids.set([])
     State.filter_text.set("")
-    State.chosen_label.set(None)
+    State.chosen_label.set("")
     PlotState.point_size.set(DEFAULT_POINT_SIZE)
     PlotState.color.set("")

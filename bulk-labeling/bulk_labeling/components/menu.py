@@ -43,8 +43,10 @@ def register_new_label_button() -> None:
     # TODO: Make a State.available_labels.append
     sl.InputText("Register new label", on_value=add_new_label)
     if State.available_labels.value:
-        sl.Select("Available labels", list(State.available_labels.value)).connect(
-            State.chosen_label
+        sl.Select(
+            label="Available labels",
+            value=State.chosen_label,
+            values=list(State.available_labels.value),
         )
 
 
@@ -101,10 +103,9 @@ def view_controller(avl_cols: List[str]) -> None:
     # TODO: A drop down should have "remove selection" option
     #  (esp if default state is None)
     sl.Select(
-        "Color by",
-        [None] + avl_cols,
-        PlotState.color.value,
-        on_value=PlotState.color.set,
+        label="Color by",
+        value=PlotState.color,
+        values=[""] + avl_cols,
     )
 
 
