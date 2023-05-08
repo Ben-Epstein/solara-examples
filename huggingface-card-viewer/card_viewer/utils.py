@@ -2,7 +2,7 @@ import reacton.ipyvuetify as v
 import solara as sl
 
 
-def format_readme(readme: str):
+def format_readme(readme: str) -> v.ValueElement:
     """Format the metadata within a readme as a scrollable window
 
     The only reason this function is complex is because I want to strip out the

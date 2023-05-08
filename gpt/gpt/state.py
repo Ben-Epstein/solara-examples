@@ -1,6 +1,6 @@
 from typing import List
 
-from solara.lab import Reactive
+from solara import reactive, Reactive
 
 
 class Question:
@@ -10,8 +10,8 @@ class Question:
 
 
 class State:
-    question = Reactive[str]("")
-    answer = Reactive[str]("<br><br><br>")
-    history = Reactive[List[Question]]([])
-    ans_btn_disabled = Reactive[bool](True)
-    openai_key = Reactive[str]("")
+    question = reactive("")
+    answer = reactive("<br><br><br>")
+    history: Reactive[List[Question]] = reactive([])
+    ans_btn_disabled = reactive(True)
+    openai_key = reactive("")

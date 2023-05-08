@@ -1,4 +1,3 @@
-import reacton.ipyvuetify as v
 import requests
 import solara as sl
 
