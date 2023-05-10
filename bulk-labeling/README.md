@@ -27,7 +27,7 @@ You can filter with the text search (regex coming soon!) or, by lasso selecting 
 
 ### Roadmap
 - [X] Allow the user to download the labeled file :D (https://github.com/widgetti/solara/pull/30)
-- [X] Fix the layout of embeddings and dataframe so they are next to each other (not stacked)<br>Also the solara message on the bottom right is in a bad spot <img width="750" height="400" alt="image" src="https://user-images.githubusercontent.com/22605641/216855251-c8f71922-3358-4383-9e2b-b8c73bfb4c41.png">
+- [X] Fix the layout of embeddings and dataframe so they are next to each other (not stacked)
 - [X] Use `solara.progress` for UMAP
 - [X] Remove `.use` from the code
 - [X] Camel Case my components
