@@ -1,6 +1,9 @@
 # bulk-labeling-solara
 A tool for bulk labeling, built in Solara!
 
+<img width="1675" alt="image" src="https://github.com/Ben-Epstein/solara-examples/assets/22605641/1d96c594-90fc-40dc-b497-88e4965fcbea">
+
+
 I'm trying to rebuild my original [bulk-labeling](https://github.com/rungalileo/bulk-labeling/) app, which was Streamlit, in [Solara](https://github.com/widgetti/solara) so it can be a bit more scalable, customizable, and robust to new features!
 
 I also want to learn how to use solara :)
