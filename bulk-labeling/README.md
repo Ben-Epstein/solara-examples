@@ -1,14 +1,33 @@
 # bulk-labeling-solara
 A tool for bulk labeling, built in Solara!
 
+<img width="1675" alt="image" src="https://github.com/Ben-Epstein/solara-examples/assets/22605641/1d96c594-90fc-40dc-b497-88e4965fcbea">
+
+
 I'm trying to rebuild my original [bulk-labeling](https://github.com/rungalileo/bulk-labeling/) app, which was Streamlit, in [Solara](https://github.com/widgetti/solara) so it can be a bit more scalable, customizable, and robust to new features!
 
 I also want to learn how to use solara :)
 
+## How to use
+We can walk through a simple example of going from an unlabeled dataset to some usable labels in just a few minutes.
 
-## Roadmap
+First, [run the app locally](https://github.com/Ben-Epstein/solara-examples/blob/main/bulk-labeling/CONTRIBUTING.md#development) (Cloud deployment coming soon!)
+
+Then upload a csv file with your text. The only requirement of the file is that it must have a text column. Any other columns added can be used for coloring the embedding plot. If you don't have one, you can use the [conv-intent](https://github.com/Ben-Epstein/solara-examples/blob/main/bulk-labeling/bulk_labeling/conv_intent.csv) dataset from this repo!
+
+![image](https://github.com/Ben-Epstein/solara-examples/assets/22605641/102f2931-ef83-4c2d-b92c-97cc2b25f0cd)
+
+Once the embeddings have processed, you'll see your dataframe on the left and embeddings on the right. The dataframe view comes with an extra text_length column that you can sort by, or color the embeddings plot with (in case text length is useful to you).
+
+You can filter with the text search (regex coming soon!) or, by lasso selecting embedding clusters from the chart. You can also color the chart and resize the points using the menu on the left.
+
+![image](https://github.com/Ben-Epstein/solara-examples/assets/22605641/8add7a83-1739-45cc-a441-6f29dcc7d08b)
+
+
+
+### Roadmap
 - [X] Allow the user to download the labeled file :D (https://github.com/widgetti/solara/pull/30)
-- [X] Fix the layout of embeddings and dataframe so they are next to each other (not stacked)<br>Also the solara message on the bottom right is in a bad spot <img width="750" height="400" alt="image" src="https://user-images.githubusercontent.com/22605641/216855251-c8f71922-3358-4383-9e2b-b8c73bfb4c41.png">
+- [X] Fix the layout of embeddings and dataframe so they are next to each other (not stacked)
 - [X] Use `solara.progress` for UMAP
 - [X] Remove `.use` from the code
 - [X] Camel Case my components
