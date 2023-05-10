@@ -30,7 +30,10 @@ def Embeddings(df: pd.DataFrame, color: str, point_size: int) -> None:
     set_point_ids = lambda data: State.filtered_ids.set(  # noqa: E731
         find_row_ids(fig, data)
     )
-    sl.FigurePlotly(fig, on_selection=set_point_ids)
+    # we use the .key() method to force the creation of a new component
+    # /widget every time the dataframe changes to work around a bug in
+    # plotly
+    sl.FigurePlotly(fig, on_selection=set_point_ids).key(id(df))
 
 
 @sl.component

@@ -8,9 +8,9 @@ from bulk_labeling.utils.df import has_df
 
 @sl.component
 def NoDF() -> None:
-    with sl.Columns([1, 1]):
-        sl.Markdown("## DataFrame (Load Data)")
-        sl.Markdown("## Embeddings (Load Data)")
+    with sl.Column(align="center"):
+        sl.Markdown("# No Data Loaded")
+        sl.Markdown("*Please load some data using the sidebar to get started*")
 
 
 @sl.component
