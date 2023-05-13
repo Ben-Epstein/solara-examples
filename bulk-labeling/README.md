@@ -1,4 +1,4 @@
-# bulk-labeling-solara
+# bulk-labeling
 A tool for bulk labeling, built in Solara!
 
 <img width="1675" alt="image" src="https://github.com/Ben-Epstein/solara-examples/assets/22605641/1d96c594-90fc-40dc-b497-88e4965fcbea">
