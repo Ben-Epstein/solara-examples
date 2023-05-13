@@ -23,6 +23,36 @@ You can filter with the text search (regex coming soon!) or, by lasso selecting 
 
 ![image](https://github.com/Ben-Epstein/solara-examples/assets/22605641/8add7a83-1739-45cc-a441-6f29dcc7d08b)
 
+Since we see some clear clusters already, let's start by investigating them. We can see one cluster with a lot of references to weather. Let's select this cluster
+
+https://github.com/Ben-Epstein/solara-examples/assets/22605641/09d4da1a-cc56-4580-bbc5-e5d1240ba971
+
+Confirming that this is about weather, we can register a new label "weather" and assign our samples
+
+https://github.com/Ben-Epstein/solara-examples/assets/22605641/90c1fece-d8a7-4d7c-97f1-4c69fee372c0
+
+The UI will reset automatically. Let's look at another one. This cluster has a lot of references to bookings and reservations. Let's select that one.
+
+https://github.com/Ben-Epstein/solara-examples/assets/22605641/52a6a970-33fb-4df2-9458-77f69ec459bf
+
+
+Once we are ready, we simple click "Export Labeled Points"
+
+![image](https://github.com/Ben-Epstein/solara-examples/assets/22605641/8d845410-d644-4d39-838b-392ea2538937)
+
+We just labeled N samples in a few minutes!
+
+There are some pretty funny "mistakes" in the embeddings (samples that are semantically similar to other categories, but have words that trigger weather/reservation) that should be considered! The embeddings aren't perfect. We are using a smaller model (paraphrase-MiniLM-L3-v2) in order to get embeddings in a reasonable speed. But it's a good start! Feel free to run this locally and use a better model
+
+![image](https://github.com/Ben-Epstein/solara-examples/assets/22605641/74b10ae5-afcf-4d49-a6bc-bda310d56d77)
+
+## Run locally
+
+If you have a GPU running locally, want to try different encoder algorithms, or don't want to upload your data, you can run this locally.
+```
+pip install -r requirements.txt
+solara run bulk_labeling/main.py
+```
 
 
 ### Roadmap
