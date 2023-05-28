@@ -64,6 +64,6 @@ solara run bulk_labeling/main.py
 - [X] Move to the new `solara.reactive`
 - [ ] Get a more fun animation for when the embeddings are being calculated. Would also be cool if we could update them with the logs from UMAP or tqdm
 - [ ] The "reset filters" button should really be a switch, not a checkbox. It doesn't look great<br> <img width="288" alt="image" src="https://user-images.githubusercontent.com/22605641/216855320-bad0c6f3-07bf-4202-baba-512396e8b703.png">
-- [ ] Add a nice readme like what I have in the [streamlit version](https://github.com/rungalileo/bulk-labeling) - We should wait until the visual issues are fixed so we don't need to redo it 
+- [X] Add a nice readme like what I have in the [streamlit version](https://github.com/rungalileo/bulk-labeling)
 - [ ] Write the blog on how I built it (same as above, wait until it's in a better state)
 - [ ] Deploy on solara cloud?!? 🚀
