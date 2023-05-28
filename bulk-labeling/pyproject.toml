@@ -12,7 +12,7 @@ license = {file = "LICENSE"}
 dynamic = ["version", "readme"]
 classifiers = ["License :: OSI Approved :: Apache License"]
 dependencies = [
-  "solara",
+  "solara>=1.15.0",
   "pandas",
   "numpy",
   "plotly==5.14.0",
