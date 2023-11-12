@@ -1,0 +1,2 @@
+solara
+spacy-to-hf
