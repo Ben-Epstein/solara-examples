@@ -42,6 +42,9 @@ def try_json(span_str: str, show_warn: bool = True) -> dict:
 
 @sl.component
 def TokenViewer():
+    with sl.Row(style={"align-items": "center"}, justify="space-between") as title_row:
+        sl.Text("Token Data", style={"font-size": "1.5rem"})
+    sl.v.Divider()
     if not spans_checkpoint.value:
         return
     spans_json = try_json(spans_checkpoint.value)
@@ -49,35 +52,58 @@ def TokenViewer():
         return
     try:
         token_data = spacy_to_hf(spans_json, tokenizer.value)
-        df = pd.DataFrame(token_data)
-        sl.Markdown("## Token Data")
-        sl.DataFrame(df)
+        data = pd.DataFrame(token_data).to_csv()
+        title_row.add_children(
+            [
+                sl.FileDownload(
+                    data,
+                    filename="token_data.csv",
+                    icon_name="mdi-download",
+                    label="Download",
+                )
+            ]
+        )
+        for key in token_data.keys():
+            with sl.Row(gap="5px", style={"flex-wrap": "wrap", "row-gap": "5px"}):
+                # I'm not sure why this is double wrapped in a list?
+                for token in token_data[key][0]:
+                    sl.v.Chip(
+                        children=[token], color="primary" if key == "tokens" else None
+                    )
     except Exception as e:
         print(type(e))
         sl.Error(f"Failed to create tokens and tags: {str(e)}")
+
 
 @sl.component
 def SpanJson():
     print(f"\n\n{spans.value}\n\n")
     spans_json = try_json(spans.value, show_warn=False)
     show_spans = json.dumps(spans_json, indent=4) if spans_json else spans.value
-    sl.Markdown(
-        f"```json\n{show_spans}\n```"
-    )
+    sl.Markdown(f"```json\n{show_spans}\n```", style={"padding": "0"})
+
 
 @sl.component
 def Options():
-    sl.Markdown("## Enter your data")
+    sl.Text("Enter Your Data", style={"font-size": "1.5rem"})
+    sl.v.Divider()
     sl.Select("Pick your tokenizer", TOKENIZERS, tokenizer)
-    sl.MarkdownEditor(value=f"```json\n{spans.value}\n```", on_value=lambda spans_str: spans.set(spans_str.lstrip("```json\n").rstrip("\n```")))
+    sl.MarkdownEditor(
+        value=f"```json\n{spans.value}\n```",
+        on_value=lambda spans_str: spans.set(
+            spans_str.lstrip("```json\n").rstrip("\n```")
+        ),
+    )
     sl.Button("Convert to tokens", on_click=lambda: spans_checkpoint.set(spans.value))
     SpanJson()
+
 
 @sl.component
 def Page():
     with sl.Columns([1, 1]):
         Options()
         TokenViewer()
-
-    
-
+    sl.Style(
+        """.solara-markdown{max-width: unset;}
+            .solara-milkdown .milkdown-menu{display: none;}"""
+    )
